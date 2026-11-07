@@ -1,0 +1,16 @@
+{
+  "name": "nodejs-supply-chain-security",
+  "version": "1.0.0",
+  "private": true,
+  "description": "npm supply-chain defenses: safe npm config, CI audit, install-script scanner, and the Node permission model",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "test": "node --test",
+    "scan": "node scripts/find-install-scripts.js",
+    "demo:open": "node permission-demo/app.mjs",
+    "demo:locked": "node --permission --allow-fs-read=./permission-demo permission-demo/app.mjs"
+  }
+}

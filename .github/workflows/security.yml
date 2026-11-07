@@ -1,0 +1,41 @@
+name: security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1' # weekly, catches newly published advisories
+
+# Least privilege for the GITHUB_TOKEN. Add more per job only when needed.
+permissions:
+  contents: read
+
+jobs:
+  dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      # In real projects, pin actions to a full commit SHA, e.g.
+      # actions/checkout@<40-char-sha> # v4. Tags can be moved by an attacker.
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # npm ci installs exactly what the lockfile says and fails if it is out of date.
+      - run: npm ci --ignore-scripts
+
+      - name: Known vulnerabilities
+        run: npm audit --audit-level=high
+
+      - name: Registry signatures and provenance
+        run: |
+          if [ -n "$(ls -A node_modules 2>/dev/null)" ]; then npm audit signatures; else echo "no dependencies"; fi
+
+      - name: Packages with install scripts
+        run: node scripts/find-install-scripts.js # add --allow pkg1,pkg2 after reviewing them
+
+      - run: npm test
