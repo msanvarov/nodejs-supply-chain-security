@@ -17,7 +17,7 @@ jobs:
     steps:
       # In real projects, pin actions to a full commit SHA, e.g.
       # actions/checkout@<40-char-sha> # v4. Tags can be moved by an attacker.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
