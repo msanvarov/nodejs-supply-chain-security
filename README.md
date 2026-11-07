@@ -1,5 +1,7 @@
 # nodejs-supply-chain-security
 
+[![CI](https://github.com/msanvarov/nodejs-supply-chain-security/actions/workflows/security.yml/badge.svg)](https://github.com/msanvarov/nodejs-supply-chain-security/actions/workflows/security.yml) ![Node](https://img.shields.io/badge/node-%3E%3D22.13-339933?logo=node.js&logoColor=white) ![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
+
 Your app runs every line of code in `node_modules` with full access to your files, env vars, and network. This repo collects practical defenses against malicious or compromised npm packages, as config you can copy and small tools you can run.
 
 ```bash
@@ -7,6 +9,17 @@ npm test             # tests for the scanner and the permission model
 npm run scan         # list packages in ./node_modules that run install scripts
 npm run demo:open    # app with normal Node permissions
 npm run demo:locked  # same app under the Node permission model
+```
+
+## Project layout
+
+```text
+.npmrc                            safe npm defaults (copy into your project)
+.github/workflows/security.yml    CI: npm ci, audit, signatures, install-script scan
+.github/dependabot.yml            weekly updates with a 7-day cooldown
+scripts/find-install-scripts.js   lists dependencies that run code on install
+permission-demo/app.mjs           same app with and without --permission
+test/supply-chain.test.js         tests for the scanner and the permission model
 ```
 
 ## Why this matters
@@ -73,3 +86,24 @@ node --permission \
 Without explicit `--allow-*` flags, the process can't read or write files, spawn child processes (`--allow-child-process`), start workers (`--allow-worker`), or load native addons (`--allow-addons`). Check at runtime with `process.permission.has('fs.write', path)`.
 
 Caveats: on Node 24 it does not restrict network access (check `node --help | grep allow-net` on newer versions), and it is a seatbelt, not a sandbox for hostile code. Pair it with containers: non-root user, read-only filesystem, no secrets the service doesn't need.
+
+## Node.js security series
+
+| Repo | Covers |
+| --- | --- |
+| [nodejs-injection-defense](https://github.com/msanvarov/nodejs-injection-defense) | Command, SQL, path traversal, prototype pollution, ReDoS |
+| [nodejs-http-hardening](https://github.com/msanvarov/nodejs-http-hardening) | Headers, body limits, timeouts, rate limiting, CORS, safe errors |
+| **nodejs-supply-chain-security** (you are here) | npm config, CI auditing, install-script scanning, permission model |
+| [nodejs-crypto-secrets](https://github.com/msanvarov/nodejs-crypto-secrets) | Password hashing, tokens, JWTs, encryption, secrets |
+
+## Running it
+
+Requires Node.js 22.13 or newer. No `npm install` needed.
+
+```bash
+git clone https://github.com/msanvarov/nodejs-supply-chain-security.git
+cd nodejs-supply-chain-security
+npm test
+```
+
+Found a mistake or want to add an example? Issues and pull requests are welcome.
