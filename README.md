@@ -1,6 +1,6 @@
 # nodejs-supply-chain-security
 
-[![CI](https://github.com/msanvarov/nodejs-supply-chain-security/actions/workflows/security.yml/badge.svg)](https://github.com/msanvarov/nodejs-supply-chain-security/actions/workflows/security.yml) ![Node](https://img.shields.io/badge/node-%3E%3D22.13-339933?logo=node.js&logoColor=white) ![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
+[![CI](https://github.com/msanvarov/nodejs-supply-chain-security/actions/workflows/security.yml/badge.svg)](https://github.com/msanvarov/nodejs-supply-chain-security/actions/workflows/security.yml) ![Node](https://img.shields.io/badge/node-%3E%3D22.13-339933?logo=node.js&logoColor=white) ![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen) ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
 
 Your app runs every line of code in `node_modules` with full access to your files, env vars, and network. This repo collects practical defenses against malicious or compromised npm packages, as config you can copy and small tools you can run.
 
@@ -107,3 +107,7 @@ npm test
 ```
 
 Found a mistake or want to add an example? Issues and pull requests are welcome.
+
+## License
+
+[MIT](LICENSE)
