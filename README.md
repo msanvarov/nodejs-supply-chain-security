@@ -1,6 +1,6 @@
 # nodejs-supply-chain-security
 
-[![CI](https://github.com/msanvarov/nodejs-supply-chain-security/actions/workflows/security.yml/badge.svg)](https://github.com/msanvarov/nodejs-supply-chain-security/actions/workflows/security.yml) ![Node](https://img.shields.io/badge/node-%3E%3D22.13-339933?logo=node.js&logoColor=white) ![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen) ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
+[![CI](https://github.com/msanvarov/nodejs-supply-chain-security/actions/workflows/security.yml/badge.svg)](https://github.com/msanvarov/nodejs-supply-chain-security/actions/workflows/security.yml) ![Node](https://img.shields.io/badge/node-%3E%3D22.13-339933?logo=node.js&logoColor=white) ![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen) ![License: MIT](https://img.shields.io/badge/license-MIT-blue) [![Live demo](https://img.shields.io/badge/live%20demo-netlify-00C7B7?logo=netlify&logoColor=white)](https://nodejs-supply-chain-security.netlify.app)
 
 Your app runs every line of code in `node_modules` with full access to your files, env vars, and network. This repo collects practical defenses against malicious or compromised npm packages, as config you can copy and small tools you can run.
 
@@ -11,6 +11,36 @@ npm run demo:open    # app with normal Node permissions
 npm run demo:locked  # same app under the Node permission model
 ```
 
+## Interactive demo
+
+**Live preview: [nodejs-supply-chain-security.netlify.app](https://nodejs-supply-chain-security.netlify.app)**. It replays recorded runs, so nothing executes on that server. Run it locally to try your own payloads.
+
+A local web page that runs each attack for real, against the unsafe setup and the safe one side by side. Everything runs offline in temp folders with fake tokens.
+
+```bash
+npm run demo   # then open http://127.0.0.1:4103
+```
+
+The hosted preview is a static build of `demo/recordings.json` (`npm run build`). Refresh the recordings with `npm run demo:record` (needs Google Chrome).
+
+### Token-stealing postinstall
+
+A fake package's `postinstall` script collects tokens during a real `npm install`. Plain install hands them over; `--ignore-scripts` never runs the script.
+
+![A plain npm install leaks the fake NPM_TOKEN and GITHUB_TOKEN to the attacker, while npm install --ignore-scripts writes nothing](docs/postinstall.png)
+
+### Install-script scanner
+
+The real `scripts/find-install-scripts.js` lists every package that would run code on install, and fails CI until you've reviewed them.
+
+![Without review, npm would run a node-gyp build, a preinstall, and a curl-pipe-to-shell postinstall; the scanner flags all three and exits 1](docs/scan.png)
+
+### Permission model
+
+The same script runs with and without `node --permission`. Tick a grant to see it open exactly one door.
+
+![Without --permission the script reads ../package.json and /etc/hosts, writes to tmp, and spawns a process; with it, all four are ERR_ACCESS_DENIED](docs/permission.png)
+
 ## Project layout
 
 ```text
@@ -19,7 +49,10 @@ npm run demo:locked  # same app under the Node permission model
 .github/dependabot.yml            weekly updates with a 7-day cooldown
 scripts/find-install-scripts.js   lists dependencies that run code on install
 permission-demo/app.mjs           same app with and without --permission
+demo/server.js, demo/index.html   interactive demo (npm run demo)
+docs/                             demo screenshots
 test/supply-chain.test.js         tests for the scanner and the permission model
+test/demo.test.js                 tests for the demo server and its local-only guards
 ```
 
 ## Why this matters
@@ -35,6 +68,8 @@ In September 2025, phishing of maintainer accounts led to malicious versions of 
 | [.github/workflows/security.yml](.github/workflows/security.yml) | CI: `npm ci`, `npm audit`, `npm audit signatures`, install-script scan, least-privilege token |
 | [.github/dependabot.yml](.github/dependabot.yml) | Weekly updates with a 7-day cooldown on new releases |
 | [permission-demo/](permission-demo/) | Shows the Node permission model blocking file, process, and write access |
+| [demo/](demo/) | Interactive web demo of all of the above (`npm run demo`). Only listens on 127.0.0.1 and rejects requests from other sites |
+| [docs/](docs/) | Screenshots of the demo |
 
 ## Mitigations
 

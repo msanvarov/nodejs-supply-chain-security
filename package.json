@@ -10,8 +10,11 @@
   "license": "MIT",
   "scripts": {
     "test": "node --test",
+    "demo": "node demo/server.js",
     "scan": "node scripts/find-install-scripts.js",
     "demo:open": "node permission-demo/app.mjs",
-    "demo:locked": "node --permission --allow-fs-read=./permission-demo permission-demo/app.mjs"
+    "demo:locked": "node --permission --allow-fs-read=./permission-demo permission-demo/app.mjs",
+    "demo:record": "node demo/static.mjs record",
+    "build": "node demo/static.mjs build"
   }
 }

